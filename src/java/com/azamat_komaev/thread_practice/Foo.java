@@ -11,14 +11,22 @@ public class Foo {
         latchFirst.countDown();
     }
 
-    public void second(Runnable r) throws InterruptedException {
-        latchFirst.await();
+    public void second(Runnable r) {
+        try {
+            latchFirst.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         r.run();
         latchSecond.countDown();
     }
 
-    public void third(Runnable r) throws InterruptedException {
-        latchSecond.await();
+    public void third(Runnable r) {
+        try {
+            latchSecond.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         r.run();
     }
 }
